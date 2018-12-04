@@ -4,7 +4,6 @@ import itertools  # Library to get permutations
 from PIL import ImageFont  # Library to create image (for export)
 from PIL import Image  # Library to create image (for export)
 from PIL import ImageDraw  # Library to create image (for export)
-from xlrd import open_workbook  # Library to import Excel Table (sudoku)
 import re
 
 
@@ -28,8 +27,8 @@ class Sudoku(object):
         self.next_step = True
         self.data = data
         self.mainMatrix = self.get_matrix()
-        if not self.mainMatrix:
-            raise ValueError
+        if not self.mainMatrix[0]:
+            raise ValueError(self.mainMatrix[1])
 
         # Save to the first step
         self.write_ex(self.mainMatrix, 0)
@@ -95,6 +94,7 @@ class Sudoku(object):
         # Write text
 
         img.save("Solved sudoku.png")
+
         return open("Solved sudoku.png", "rb")
 
     def get_matrix(self):
@@ -104,12 +104,11 @@ class Sudoku(object):
         # Create 2D array
         # Define global variable clues to count difficulty of a puzzle
         if not self.data:
-            return False
+            return False, "Empty"
         else:
             rows = self.data.split("\n")
             if len(rows) != 9:
-                print(f"matrix incorrect {rows}")
-                return False
+                return False, f"matrix incorrect {rows}"
             for row in rows:
                 try:
                     matrix_row = list(map(int, re.findall("\d", row)))
@@ -117,9 +116,8 @@ class Sudoku(object):
                         raise ValueError
                     matrix.append(matrix_row)
                 except ValueError:
-                    print(f"rows incorrect {row}")
 
-                    return False
+                    return False, f"rows incorrect {row}"
 
         return matrix  # return the array
 
@@ -445,7 +443,7 @@ class Sudoku(object):
         text_time = f"{time.seconds}s : {time.microseconds / 1000} ms."
 
         # Create the image of the solution for export
-        self.finished(self.mainMatrix, text_time, self.count, self.difficulty())
+        return self.finished(self.mainMatrix, text_time, self.count, self.difficulty())
 
 
 def solve_puzzle(data: str):
@@ -453,4 +451,3 @@ def solve_puzzle(data: str):
         return Sudoku(data=data).solve()
     except ValueError as err:
         return f"Error {err}"
-
