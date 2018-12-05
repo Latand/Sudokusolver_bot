@@ -115,3 +115,5 @@ dmypy.json
 .idea/
 *.xml
 *.png
+*.psd
+*.jpg
