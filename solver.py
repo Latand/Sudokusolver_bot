@@ -68,19 +68,22 @@ class Sudoku(object):
         for thick in range(4):
             # A loop for drawing thick lines between numbers
 
-            draw.line((25, 20 + thick * 123) + (int(long * 16) - 8, 20 + thick * 123), fill=128, width=3)
+            draw.line((25, 20 + thick * 123) + (int(long * 16) - 8, 20 + thick * 123), fill=(0, 0, 0), width=3)
             # Draw horizontal lines
 
-            draw.line((25 + thick * 133, 20) + (25 + thick * 133, 10 + height * 42), fill=128, width=3)
+            draw.line((25 + thick * 133, 20) + (25 + thick * 133, 10 + height * 42), fill=(0, 0, 0), width=3)
             # Draw vertical lines
 
         for thin in range(10):
             # A loop for drawing thin lines between numbers
 
-            draw.line((25, 20 + thin * int(123 / 3)) + (int(long * 16) - 8, 20 + thin * int(123 / 3)), fill=128, width=1)
+            draw.line((25, 20 + thin * int(123 / 3)) + (int(long * 16) - 8, 20 + thin * int(123 / 3)),
+                      fill=(0, 0, 0),
+                      width=1)
             # Draw horizontal lines
 
-            draw.line((25 + thin * int(133 / 3) + 2, 20) + (25 + thin * int(133 / 3) + 2, 10 + height * 42), fill=128,
+            draw.line((25 + thin * int(133 / 3) + 2, 20) + (25 + thin * int(133 / 3) + 2, 10 + height * 42),
+                      fill=(0, 0, 0),
                       width=1)
             # Draw vertical lines
 
